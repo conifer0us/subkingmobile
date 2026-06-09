@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sub King</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ───────────────────────────────────────────────── */
+    :root {
+      --royal:      #4169E1;
+      --royal-dark: #1a2a5e;
+      --royal-mid:  #2f50b8;
+      --royal-pale: #eef1fb;
+      --gold:       #FFD700;
+      --gold-dark:  #c9a800;
+      --gold-pale:  #fffbe6;
+      --cream:      #FFF8E7;
+      --cream-dark: #f0e8d0;
+      --white:      #ffffff;
+      --text:       #1c1c1e;
+      --text-mid:   #5a5a6a;
+      --divider:    #e2ddd0;
+      --radius:     10px;
+      --max-w:      480px;
+    }
+
+    /* ─── RESET ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #e8eaf0;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── LAYOUT SHELL ───────────────────────────────────────────── */
+    .page-shell {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 40px rgba(0,0,0,0.14);
+    }
+
+    /* ─── STICKY NAV ─────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--royal-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      height: 60px;
+    }
+    .logo-img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: scale-down;
+      padding-left: 10px;
+    }
+    .nav-links { display: flex; gap: 18px; }
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ─── PHOTO SLIDER ───────────────────────────────────────────── */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: #cdd2e8;
+    }
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* Prev/next arrows */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.82);
+      border: none;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: background 0.2s;
+    }
+    .slider-btn:hover { background: var(--gold); }
+    .slider-btn svg { width: 16px; height: 16px; stroke: var(--royal-dark); stroke-width: 2.5; fill: none; }
+    .slider-prev { left: 10px; }
+    .slider-next { right: 10px; }
+    /* Dots */
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .slider-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .slider-dot.active {
+      background: var(--gold);
+      transform: scale(1.25);
+    }
+
+    /* ─── HERO CARD (light) ──────────────────────────────────────── */
+    .hero-card {
+      background: var(--white);
+      padding: 22px 22px 0;
+      border-bottom: 3px solid var(--gold);
+    }
+    /* thin royal blue top accent line */
+    .hero-card::before {
+      content: '';
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, var(--royal), var(--royal-mid), var(--royal));
+      margin: -22px -22px 18px;
+    }
+    .hero-name-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .hero-crown {
+      width: 34px; height: 34px;
+      flex-shrink: 0;
+    }
+    .hero-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--royal-dark);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+    .hero-name em { color: var(--gold-dark); font-style: normal; }
+    .hero-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-left: 46px;
+    }
+
+    /* Info strip — light background */
+    .hero-info-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .hero-info-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--divider);
+    }
+    .hero-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+    .hero-info-item:last-child { border-bottom: none; }
+    .hero-info-icon {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      background: var(--royal-pale);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .hero-info-icon svg { width: 15px; height: 15px; stroke: var(--royal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-info-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--royal);
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .hero-info-value {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .hero-info-value a {
+      color: var(--royal-dark);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: rgba(65,105,225,0.3);
+    }
+
+    /* ─── SECTION DIVIDER ────────────────────────────────────────── */
+    .section-divider {
+      height: 5px;
+      background: linear-gradient(90deg, var(--royal-dark), var(--royal), var(--royal-dark));
+    }
+    .gold-divider {
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+    }
+
+    /* ─── MENU SECTION HEADERS ───────────────────────────────────── */
+    .section-anchor { scroll-margin-top: 60px; }
+    .section-header {
+      background: var(--royal-dark);
+      padding: 18px 22px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-header::after {
+      content: '';
+      position: absolute;
+      right: -30px; top: -30px;
+      width: 100px; height: 100px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .section-header-eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,215,0,0.65);
+      margin-bottom: 2px;
+    }
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── MENU BODY ──────────────────────────────────────────────── */
+    .menu-body { background: var(--cream); padding: 0 0 8px; }
+
+    /* ─── SUBSECTION LABELS ──────────────────────────────────────── */
+    .sub-section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 22px 10px;
+    }
+    .sub-section-label h3 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--royal-dark);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .sub-section-line {
+      flex: 1;
+      height: 1.5px;
+      background: var(--divider);
+    }
+
+    /* ─── MENU ITEMS ─────────────────────────────────────────────── */
+    .price-hint {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 22px 6px;
+    }
+    .price-hint span {
+      font-size: 0.62rem;
+      color: var(--text-mid);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 11px 22px;
+      border-bottom: 1px solid var(--divider);
+      gap: 12px;
+      background: var(--white);
+    }
+    .menu-item:last-of-type { border-bottom: none; }
+    .menu-item-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .menu-item-desc {
+      font-size: 0.76rem;
+      color: var(--text-mid);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+    .menu-item-prices {
+      flex-shrink: 0;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .price-size {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
+      font-weight: 600;
+    }
+    .price-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--royal-dark);
+    }
+    .price-val.single {
+      font-size: 1rem;
+      color: var(--royal);
+    }
+
+    /* ─── MENU CARD WRAPPER ──────────────────────────────────────── */
+    .menu-card {
+      margin: 10px 14px 4px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1.5px solid var(--divider);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .menu-card .menu-item { background: var(--white); }
+    .menu-card .menu-item:last-child { border-bottom: none; }
+
+    /* ─── INGREDIENTS (plain text) ───────────────────────────────── */
+    .ingredients-card {
+      margin: 12px 14px 14px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--divider);
+      background: var(--white);
+      overflow: hidden;
+    }
+    .ingredients-header {
+      background: var(--royal-dark);
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ingredients-header span {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .ingredients-body {
+      padding: 13px 16px 15px;
+    }
+    .ingredients-note {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-mid);
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+    .ingredients-list {
+      font-size: 0.84rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ─── PREMIUM ADD-ONS ────────────────────────────────────────── */
+    .premium-section {
+      margin: 0 14px 18px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1.5px solid var(--gold-dark);
+      background: var(--white);
+    }
+    .premium-header {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .premium-header span {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--royal-dark);
+    }
+    .premium-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 16px;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .premium-item:last-child { border-bottom: none; }
+    .premium-item-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .premium-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold-dark);
+    }
+
+    /* ─── LITE SIDE SECTION ──────────────────────────────────────── */
+    .lite-header { background: #1e5c30; }
+    .lite-header h2 { color: #b6f0c2; }
+    .lite-header .section-header-eyebrow { color: rgba(182,240,194,0.65); }
+    .lite-item .price-val.single { color: #1e5c30; }
+
+    /* ─── TRAY SECTION ───────────────────────────────────────────── */
+    .tray-header { background: var(--royal-mid); }
+    .tray-intro {
+      padding: 14px 22px 4px;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+    .tray-card {
+      margin: 12px 14px 16px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1.5px solid var(--divider);
+      background: var(--white);
+    }
+    .tray-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .tray-item:last-child { border-bottom: none; }
+    .tray-item-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .tray-item-desc { font-size: 0.74rem; color: var(--text-mid); margin-top: 2px; }
+    .tray-call {
+      margin: 0 14px 22px;
+      background: var(--royal-pale);
+      border: 1.5px solid var(--royal);
+      color: var(--royal-dark);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .tray-call-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      background: var(--royal-dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tray-call-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .tray-call-text p:first-child {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--royal-dark);
+      margin-bottom: 2px;
+    }
+    .tray-call-text p:last-child { font-size: 0.78rem; color: var(--text-mid); line-height: 1.4; }
+    .tray-call-text a { color: var(--royal); font-weight: 600; }
+
+    /* ─── FOOTER (lighter) ───────────────────────────────────────── */
+    .footer {
+      background: var(--royal-dark);
+      padding: 28px 22px 44px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 3px;
+    }
+    .footer-tagline {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .footer-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.22); }
+
+    /* ─── DESKTOP ────────────────────────────────────────────────── */
+    @media (min-width: 600px) {
+      .page-shell { border-radius: 12px; margin: 24px auto; min-height: unset; }
+      body { background: #cdd2e0; }
+      .slider { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- ── STICKY NAV ─────────────────────────────────────────── -->
+  <nav class="nav" id="top-nav">
+    <img class="logo-img" src="img/logo.png" />
+
+    <div class="nav-links">
+      <a href="#info">Info</a>
+      <a href="#menu">Menu</a>
+      <a href="#trays">Trays</a>
+    </div>
+  </nav>
+
+  <!-- ── PHOTO SLIDER ───────────────────────────────────────── -->
+  <div class="slider" id="slider">
+    <div class="slider-track" id="slider-track">
+      <!-- Place Images for Slideshow Here -->
+      <img class="slide" src="img/store.jpg"/>
+      <img class="slide" src="img/sub.avif"/>
+      <img class="slide" src="img/tray.avif"/>
+    </div>
+
+    <!-- Controls -->
+    <button class="slider-btn slider-prev" id="slider-prev" aria-label="Previous photo">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="slider-btn slider-next" id="slider-next" aria-label="Next photo">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <div class="slider-dots" id="slider-dots">
+      <button class="slider-dot active" data-index="0" aria-label="Photo 1"></button>
+      <button class="slider-dot" data-index="1" aria-label="Photo 2"></button>
+      <button class="slider-dot" data-index="2" aria-label="Photo 3"></button>
+    </div>
+  </div>
+
+  <!-- ── HERO CARD (light) ──────────────────────────────────── -->
+  <div class="hero-card" id="info">
+    <div class="hero-info-top">
+      <!-- Phone -->
+      <div class="hero-info-item">
+        <div class="hero-info-icon">
+          <a href="tel:+12514712141"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.8 12.14a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.72 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.16a16 16 0 0 0 5.93 5.93l1.03-1.03a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.01z"/></svg></a>
+        </div>
+        <div>
+          <div class="hero-info-label">Call Us</div>
+          <div class="hero-info-value"><a href="tel:+12514712141">(251) 471-2141</a></div>
+        </div>
+      </div>
+
+      <!-- Hours -->
+      <div class="hero-info-item">
+        <div class="hero-info-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        </div>
+        <div>
+          <div class="hero-info-label">Hours</div>
+          <div class="hero-info-value">
+            Monday - Saturday, 11am - 5pm<br>
+            3pm-5pm Drive Thru Only<br>
+            <b>Closed Sundays</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- Find Us -->
+      <div class="hero-info-item">
+        <div class="hero-info-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21c-4.418-4.418-7-7.582-7-10a7 7 0 1 1 14 0c0 2.418-2.582 5.582-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="hero-info-label">Find Us</div>
+          <div class="hero-info-value">
+            3211 Moffett Rd #101,<br>
+            Mobile, AL 36607
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SUBS & SANDWICHES
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section-anchor" id="menu">
+    <div class="section-header">
+      <div class="section-header-eyebrow">Our Menu</div>
+      <h2>SUBS &amp; SANDWICHES</h2>
+    </div>
+  </section>
+
+  <div class="menu-body">
+
+    <!-- COLD SUBS -->
+    <div class="sub-section-label">
+      <h3>Cold Subs</h3>
+      <div class="sub-section-line"></div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Italian Classic</div>
+          <div class="menu-item-desc">Ham, salami, pepperoni, provolone</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$11.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Turkey Club</div>
+          <div class="menu-item-desc">Sliced turkey, swiss, bacon, lettuce, tomato</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.49</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$10.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">The Royal</div>
+          <div class="menu-item-desc">Roast beef, sharp cheddar, horseradish mayo</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.49</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.49</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Veggie Delight</div>
+          <div class="menu-item-desc">Cucumber, peppers, onion, olives, provolone</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$6.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$9.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Tuna Salad</div>
+          <div class="menu-item-desc">House tuna salad, lettuce, tomato, red onion</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.29</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$10.49</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOT SUBS -->
+    <div class="sub-section-label" style="margin-top:10px;">
+      <h3>Hot Subs</h3>
+      <div class="sub-section-line"></div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Philly Cheesesteak</div>
+          <div class="menu-item-desc">Shaved ribeye, sautéed onions &amp; peppers, provolone</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.49</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$13.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Meatball Parm</div>
+          <div class="menu-item-desc">House meatballs, marinara, melted mozzarella</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Chicken Parm</div>
+          <div class="menu-item-desc">Crispy chicken cutlet, marinara, fresh mozzarella</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Grilled Chicken</div>
+          <div class="menu-item-desc">Marinated grilled chicken breast, roasted peppers, swiss</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.49</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.49</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">Sausage &amp; Peppers</div>
+          <div class="menu-item-desc">Italian sausage, roasted peppers &amp; onions, provolone</div>
+        </div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INCLUDED TOPPINGS — plain text -->
+    <div class="ingredients-card">
+      <div class="ingredients-header">
+        <span>Included Toppings</span>
+      </div>
+      <div class="ingredients-body">
+        <p class="ingredients-note">All sandwiches may include any of the following at no extra charge:</p>
+        <div class="ingredients-list">
+          Lettuce, Tomato, Onion, Green Peppers, Black Olives, Banana Peppers, Jalapeños, Pickles, Cucumbers, Oil &amp; Vinegar, Mayo, Yellow Mustard, Dijon Mustard, Ranch, Salt &amp; Pepper, Oregano
+        </div>
+      </div>
+    </div>
+
+    <!-- PREMIUM ADD-ONS -->
+    <div class="premium-section">
+      <div class="premium-header">
+        <span>Premium Add-Ons</span>
+      </div>
+      <div class="premium-item"><span class="premium-item-name">Extra Meat</span><span class="premium-price">+$2.00</span></div>
+      <div class="premium-item"><span class="premium-item-name">Extra Cheese</span><span class="premium-price">+$1.00</span></div>
+      <div class="premium-item"><span class="premium-item-name">Avocado</span><span class="premium-price">+$1.50</span></div>
+      <div class="premium-item"><span class="premium-item-name">Bacon</span><span class="premium-price">+$1.50</span></div>
+      <div class="premium-item"><span class="premium-item-name">Sun-Dried Tomatoes</span><span class="premium-price">+$1.00</span></div>
+      <div class="premium-item"><span class="premium-item-name">Roasted Red Peppers</span><span class="premium-price">+$1.00</span></div>
+      <div class="premium-item"><span class="premium-item-name">Fresh Mozzarella</span><span class="premium-price">+$1.50</span></div>
+    </div>
+
+  </div><!-- /menu-body (subs) -->
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ON THE LITE SIDE
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section-anchor" id="lite">
+    <div class="section-header lite-header">
+      <h2>ON THE LITE SIDE</h2>
+    </div>
+  </section>
+
+  <div class="menu-body">
+    <div class="sub-section-label">
+      <h3>Salads</h3>
+      <div class="sub-section-line"></div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Garden Salad</div>
+          <div class="menu-item-desc">Mixed greens, tomato, cucumber, carrot, red onion, croutons</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$7.99</span></div>
+      </div>
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Caesar Salad</div>
+          <div class="menu-item-desc">Romaine, parmesan, house Caesar dressing, croutons</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$8.49</span></div>
+      </div>
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Grilled Chicken Salad</div>
+          <div class="menu-item-desc">Mixed greens, grilled chicken, tomato, cucumber, red onion</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$10.49</span></div>
+      </div>
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Tuna Salad Bowl</div>
+          <div class="menu-item-desc">House tuna salad over mixed greens, red onion, celery, olives</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$9.99</span></div>
+      </div>
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Antipasto Salad</div>
+          <div class="menu-item-desc">Ham, salami, pepperoni, provolone, pepperoncini, olives, mixed greens</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$11.49</span></div>
+      </div>
+      <div class="menu-item lite-item">
+        <div>
+          <div class="menu-item-name">Caprese</div>
+          <div class="menu-item-desc">Fresh mozzarella, heirloom tomato, basil, balsamic glaze</div>
+        </div>
+        <div class="menu-item-prices"><span class="price-val single">$9.49</span></div>
+      </div>
+    </div>
+
+    <div style="padding:10px 22px 18px;">
+      <p style="font-size:0.76rem; color:var(--text-mid);"><strong>Dressings:</strong> Ranch · Balsamic Vinaigrette · Italian · Caesar · Honey Mustard · Oil &amp; Vinegar</p>
+    </div>
+
+  </div><!-- /menu-body (lite) -->
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SANDWICH TRAYS
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section-anchor" id="trays">
+    <div class="section-header tray-header">
+      <div class="section-header-eyebrow">Catering</div>
+      <h2>SANDWICH TRAYS</h2>
+    </div>
+  </section>
+
+  <div class="menu-body">
+    <p class="tray-intro">
+      Perfect for office lunches, parties, and events. All trays are freshly prepared with your choice of subs, cut for easy serving. We recommend at least 24 hours notice.
+    </p>
+
+    <div class="tray-card">
+      <div class="tray-item">
+        <div>
+          <div class="tray-item-name">Small Tray</div>
+          <div class="tray-item-desc">Serves approx. 10–15 guests · 2 full subs cut to order</div>
+        </div>
+        <div><span class="price-val single">$39.99</span></div>
+      </div>
+      <div class="tray-item">
+        <div>
+          <div class="tray-item-name">Large Tray</div>
+          <div class="tray-item-desc">Serves approx. 25–30 guests · 4 full subs cut to order</div>
+        </div>
+        <div><span class="price-val single">$74.99</span></div>
+      </div>
+    </div>
+
+    <div class="tray-call">
+      <a href="tel:+12514712141">
+        <div class="tray-call-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.8 12.14a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.72 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.16a16 16 0 0 0 5.93 5.93l1.03-1.03a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.01z"/></svg>
+        </div>
+      </a>
+      <div class="tray-call-text">
+        <p>Order Your Tray Today</p>
+        <p>Call us at <a href="tel:+12514712141">(251) 471-2141</a></p>
+      </div>
+    </div>
+
+  </div><!-- /menu-body (trays) -->
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#top-nav">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#trays">Catering</a>
+    </div>
+    <div class="footer-copy">© 2026 Gulf State Sub. All rights reserved.</div>
+  </footer>
+
+</div><!-- /page-shell -->
+
+<script>
+  /* ── PHOTO SLIDER ─────────────────────────────────────────── */
+  (function() {
+    const track  = document.getElementById('slider-track');
+    const dots   = document.querySelectorAll('.slider-dot');
+    const slides = document.querySelectorAll('.slide');
+    const total  = slides.length;
+    let current  = 0;
+    let timer;
+
+    function goTo(n) {
+      current = (n + total) % total;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(next, 4000);
+    }
+
+    document.getElementById('slider-next').addEventListener('click', () => { next(); startAuto(); });
+    document.getElementById('slider-prev').addEventListener('click', () => { prev(); startAuto(); });
+    dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.index); startAuto(); }));
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); startAuto(); }
+    }, { passive: true });
+
+    startAuto();
+  })();
+</script>
+</body>
+</html>
