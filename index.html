@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
   <style>
     /* ─── TOKENS ───────────────────────────────────────────────── */
     :root {
@@ -58,14 +64,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 18px 0 12px;
       height: 60px;
     }
     .logo-img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: scale-down;
-      padding-left: 10px;
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      display: block;
     }
     .nav-links { display: flex; gap: 18px; }
     .nav-links a {
@@ -153,6 +159,7 @@
       background: var(--white);
       padding: 22px 22px 0;
       border-bottom: 3px solid var(--gold);
+      scroll-margin-top: 60px;
     }
     /* thin royal blue top accent line */
     .hero-card::before {
@@ -573,6 +580,63 @@
     .footer-links a:hover { color: var(--gold); }
     .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.22); }
 
+    /* ─── COMBO SECTION ─────────────────────────────────────────── */
+    .combo-header { background: #5b3a8a; }
+    .combo-header h2 { color: #e8d5ff; }
+    .combo-header .section-header-eyebrow { color: rgba(232,213,255,0.65); }
+    .combo-note {
+      background: #f7f2ff;
+      border-left: 3px solid #7c52b8;
+      margin: 14px 14px 6px;
+      padding: 9px 14px;
+      border-radius: 0 6px 6px 0;
+    }
+    .combo-note p { font-size: 0.78rem; color: #4a2d7a; line-height: 1.5; }
+    .combo-item .price-val.single { color: #5b3a8a; }
+
+    /* ─── DAILY SPECIALS ─────────────────────────────────────────── */
+    .specials-header { background: #8a3a1e; }
+    .specials-header h2 { color: #ffddd0; }
+    .specials-header .section-header-eyebrow { color: rgba(255,221,208,0.65); }
+    .specials-note {
+      background: #fff8f5;
+      border-left: 3px solid #c0521e;
+      margin: 14px 14px 6px;
+      padding: 9px 14px;
+      border-radius: 0 6px 6px 0;
+    }
+    .specials-note p { font-size: 0.78rem; color: #7a2e10; line-height: 1.5; }
+    .day-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--cream-dark);
+      background: var(--white);
+    }
+    .day-row:last-child { border-bottom: none; }
+    .day-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #8a3a1e;
+      min-width: 72px;
+      padding-top: 1px;
+    }
+    .day-special {
+      flex: 1;
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .day-special-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #8a3a1e;
+      flex-shrink: 0;
+    }
+
     /* ─── DESKTOP ────────────────────────────────────────────────── */
     @media (min-width: 600px) {
       .page-shell { border-radius: 12px; margin: 24px auto; min-height: unset; }
@@ -684,53 +748,90 @@
 
     <div class="menu-card">
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Italian Classic</div>
-          <div class="menu-item-desc">Ham, salami, pepperoni, provolone</div>
-        </div>
+        <div><div class="menu-item-name">1. Turkey</div></div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.99</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$11.99</span></div>
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$15.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">2. Ham</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$15.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">3. Roast Beef</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$17.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">4. Turkey and Ham</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.49</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">5. Turkey, Ham and Roast Beef</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$17.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">6. Turkey and Roast Beef</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$17.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">7. Ham and Salami</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.49</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">8. Ham and Pepperoni</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.49</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">9. Ham, Pepperoni and Salami</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.99</span></div>
         </div>
       </div>
       <div class="menu-item">
         <div>
-          <div class="menu-item-name">Turkey Club</div>
-          <div class="menu-item-desc">Sliced turkey, swiss, bacon, lettuce, tomato</div>
+          <div class="menu-item-name">10. Royal Sub</div>
+          <div class="menu-item-desc">Ham, Turkey, Bologna, Salami, and Pepperoni</div>
         </div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.49</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$10.99</span></div>
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.99</span></div>
         </div>
       </div>
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">The Royal</div>
-          <div class="menu-item-desc">Roast beef, sharp cheddar, horseradish mayo</div>
-        </div>
+        <div><div class="menu-item-name">11. All Cheese</div></div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.49</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.49</span></div>
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$15.99</span></div>
         </div>
       </div>
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Veggie Delight</div>
-          <div class="menu-item-desc">Cucumber, peppers, onion, olives, provolone</div>
-        </div>
+        <div><div class="menu-item-name">12. Tuna</div></div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$6.99</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$9.99</span></div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Tuna Salad</div>
-          <div class="menu-item-desc">House tuna salad, lettuce, tomato, red onion</div>
-        </div>
-        <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$7.29</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$10.49</span></div>
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.49</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.49</span></div>
         </div>
       </div>
     </div>
@@ -743,53 +844,54 @@
 
     <div class="menu-card">
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Philly Cheesesteak</div>
-          <div class="menu-item-desc">Shaved ribeye, sautéed onions &amp; peppers, provolone</div>
-        </div>
+        <div><div class="menu-item-name">Meatball Sub</div></div>
         <div class="menu-item-prices">
           <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.49</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$13.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$16.99</span></div>
         </div>
       </div>
       <div class="menu-item">
         <div>
-          <div class="menu-item-name">Meatball Parm</div>
-          <div class="menu-item-desc">House meatballs, marinara, melted mozzarella</div>
+          <div class="menu-item-name">Reuben</div>
+          <div class="menu-item-desc">Corned Beef or Turkey, Swiss Cheese, Kraut and Mustard</div>
         </div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+          <span class="price-val">$9.99</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">Philly Cheese Steak</div></div>
+        <div class="menu-item-prices">
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$17.99</span></div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div><div class="menu-item-name">BLT</div></div>
+        <div class="menu-item-prices">
+          <span class="price-val">$7.99</span>
         </div>
       </div>
       <div class="menu-item">
         <div>
-          <div class="menu-item-name">Chicken Parm</div>
-          <div class="menu-item-desc">Crispy chicken cutlet, marinara, fresh mozzarella</div>
+          <div class="menu-item-name">Grilled Cheese</div>
+          <div class="menu-item-desc">With chips</div>
         </div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+          <span class="price-val">$7.49</span>
         </div>
       </div>
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Grilled Chicken</div>
-          <div class="menu-item-desc">Marinated grilled chicken breast, roasted peppers, swiss</div>
-        </div>
+        <div><div class="menu-item-name">Chicken Philly</div></div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.49</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.49</span></div>
+          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$9.99</span></div>
+          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$17.99</span></div>
         </div>
       </div>
       <div class="menu-item">
-        <div>
-          <div class="menu-item-name">Sausage &amp; Peppers</div>
-          <div class="menu-item-desc">Italian sausage, roasted peppers &amp; onions, provolone</div>
-        </div>
+        <div><div class="menu-item-name">Chicken Pita</div></div>
         <div class="menu-item-prices">
-          <div class="price-row"><span class="price-size">Sm</span><span class="price-val">$8.99</span></div>
-          <div class="price-row"><span class="price-size">Lg</span><span class="price-val">$12.99</span></div>
+          <span class="price-val">$9.99</span>
         </div>
       </div>
     </div>
@@ -802,26 +904,107 @@
       <div class="ingredients-body">
         <p class="ingredients-note">All sandwiches may include any of the following at no extra charge:</p>
         <div class="ingredients-list">
-          Lettuce, Tomato, Onion, Green Peppers, Black Olives, Banana Peppers, Jalapeños, Pickles, Cucumbers, Oil &amp; Vinegar, Mayo, Yellow Mustard, Dijon Mustard, Ranch, Salt &amp; Pepper, Oregano
+          Lettuce, Tomato, Oil, Onion, Vinegar, Pickles, Salt, Pepper, Oregano, Mustard, Mayo, &amp; Jalapeño Peppers. Other items upon request.
         </div>
       </div>
     </div>
 
-    <!-- PREMIUM ADD-ONS -->
+    <!-- BREADS -->
+    <div class="ingredients-card" style="margin-top:0;">
+      <div class="ingredients-header">
+        <span>Breads</span>
+      </div>
+      <div class="ingredients-body">
+        <div class="ingredients-list">
+          White Sub Roll · Wheat Sub Roll · Rye Bread · White Bread
+        </div>
+      </div>
+    </div>
+
+    <!-- EXTRAS / PREMIUM ADD-ONS -->
     <div class="premium-section">
       <div class="premium-header">
-        <span>Premium Add-Ons</span>
+        <span>Extras</span>
       </div>
-      <div class="premium-item"><span class="premium-item-name">Extra Meat</span><span class="premium-price">+$2.00</span></div>
-      <div class="premium-item"><span class="premium-item-name">Extra Cheese</span><span class="premium-price">+$1.00</span></div>
-      <div class="premium-item"><span class="premium-item-name">Avocado</span><span class="premium-price">+$1.50</span></div>
-      <div class="premium-item"><span class="premium-item-name">Bacon</span><span class="premium-price">+$1.50</span></div>
-      <div class="premium-item"><span class="premium-item-name">Sun-Dried Tomatoes</span><span class="premium-price">+$1.00</span></div>
-      <div class="premium-item"><span class="premium-item-name">Roasted Red Peppers</span><span class="premium-price">+$1.00</span></div>
-      <div class="premium-item"><span class="premium-item-name">Fresh Mozzarella</span><span class="premium-price">+$1.50</span></div>
+      <div class="premium-item">
+        <span class="premium-item-name">2X Meat</span>
+        <span class="premium-price">Sm +$2.50 &nbsp;/&nbsp; Lg +$4.99</span>
+      </div>
+      <div class="premium-item">
+        <span class="premium-item-name">2X Cheese</span>
+        <span class="premium-price">Sm +$1.50 &nbsp;/&nbsp; Lg +$3.00</span>
+      </div>
+      <div class="premium-item">
+        <span class="premium-item-name">2X Steak</span>
+        <span class="premium-price">Sm +$2.50 &nbsp;/&nbsp; Lg +$4.99</span>
+      </div>
+      <div class="premium-item">
+        <span class="premium-item-name">Xtra Tuna</span>
+        <span class="premium-price">+$2.99</span>
+      </div>
+      <div class="premium-item">
+        <span class="premium-item-name">Bacon</span>
+        <span class="premium-price">+$0.40 per slice</span>
+      </div>
     </div>
 
   </div><!-- /menu-body (subs) -->
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       COMBOS
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section-anchor" id="combos">
+    <div class="section-header combo-header">
+      <h2>COMBOS &amp; EXTRAS</h2>
+    </div>
+  </section>
+
+  <div class="menu-body">
+    <div class="combo-note">
+      <p>Make any menu item a combo — add chips &amp; a drink for only <strong>$2.49</strong></p>
+    </div>
+
+    <div class="sub-section-label">
+      <h3>Chips</h3>
+      <div class="sub-section-line"></div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Chips</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$0.99</span></div>
+      </div>
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Cookies</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$0.99</span></div>
+      </div>
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Potato Salad</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$0.99</span></div>
+      </div>
+    </div>
+
+    <div class="sub-section-label" style="margin-top:8px;">
+      <h3>Drinks</h3>
+      <div class="sub-section-line"></div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Medium Fountain Drink</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$2.25</span></div>
+      </div>
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Large Fountain Drink</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$2.99</span></div>
+      </div>
+      <div class="menu-item combo-item">
+        <div><div class="menu-item-name">Water / Ice</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$0.75</span></div>
+      </div>
+    </div>
+
+  </div><!-- /menu-body (combos) -->
 
   <div class="section-divider"></div>
 
@@ -842,54 +1025,73 @@
 
     <div class="menu-card">
       <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Garden Salad</div>
-          <div class="menu-item-desc">Mixed greens, tomato, cucumber, carrot, red onion, croutons</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$7.99</span></div>
+        <div><div class="menu-item-name">Grilled Chicken Salad</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$15.99</span></div>
       </div>
       <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Caesar Salad</div>
-          <div class="menu-item-desc">Romaine, parmesan, house Caesar dressing, croutons</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$8.49</span></div>
+        <div><div class="menu-item-name">Chef Salad</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$14.75</span></div>
       </div>
       <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Grilled Chicken Salad</div>
-          <div class="menu-item-desc">Mixed greens, grilled chicken, tomato, cucumber, red onion</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$10.49</span></div>
+        <div><div class="menu-item-name">Tuna Salad</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$14.75</span></div>
       </div>
       <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Tuna Salad Bowl</div>
-          <div class="menu-item-desc">House tuna salad over mixed greens, red onion, celery, olives</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$9.99</span></div>
-      </div>
-      <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Antipasto Salad</div>
-          <div class="menu-item-desc">Ham, salami, pepperoni, provolone, pepperoncini, olives, mixed greens</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$11.49</span></div>
-      </div>
-      <div class="menu-item lite-item">
-        <div>
-          <div class="menu-item-name">Caprese</div>
-          <div class="menu-item-desc">Fresh mozzarella, heirloom tomato, basil, balsamic glaze</div>
-        </div>
-        <div class="menu-item-prices"><span class="price-val single">$9.49</span></div>
+        <div><div class="menu-item-name">Garden Salad</div></div>
+        <div class="menu-item-prices"><span class="price-val single">$12.75</span></div>
       </div>
     </div>
 
-    <div style="padding:10px 22px 18px;">
-      <p style="font-size:0.76rem; color:var(--text-mid);"><strong>Dressings:</strong> Ranch · Balsamic Vinaigrette · Italian · Caesar · Honey Mustard · Oil &amp; Vinegar</p>
+    <div style="padding:10px 22px 4px;">
+      <p style="font-size:0.76rem; color:var(--text-mid);">All on a bed of lettuce with vegetables. "Everything" on a salad means: Lettuce, Tomato, Onion, Oil, Vinegar, Pickles, Salt, Pepper, Oregano, Banana Peppers, Jalapeño Peppers, Cucumbers &amp; Olives.</p>
+    </div>
+    <div style="padding:6px 22px 18px;">
+      <p style="font-size:0.76rem; color:var(--text-mid);"><strong>Dressings:</strong> Ranch · Honey Mustard · Thousand Island · Oil &amp; Vinegar</p>
+      <p style="font-size:0.76rem; color:var(--text-mid); margin-top:4px;"><strong>Extra Dressing:</strong> $1.50</p>
     </div>
 
   </div><!-- /menu-body (lite) -->
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       DAILY SPECIALS
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section-anchor" id="specials">
+    <div class="section-header specials-header">
+      <h2>DAILY SPECIALS</h2>
+    </div>
+  </section>
+
+  <div class="menu-body">
+    <div class="specials-note">
+      <p>A 7" sub with chips and a 20oz drink for <b>$11.49!</b></p>
+    </div>
+
+    <div class="menu-card" style="margin-top:12px;">
+      <div class="day-row">
+        <span class="day-label">Monday</span>
+        <span class="day-special">Ham, Turkey &amp; Cheese</span>
+      </div>
+      <div class="day-row">
+        <span class="day-label">Tuesday</span>
+        <span class="day-special">Royal Sub</span>
+      </div>
+      <div class="day-row">
+        <span class="day-label">Wednesday</span>
+        <span class="day-special">Ham, Turkey, Roast Beef &amp; Cheese</span>
+      </div>
+      <div class="day-row">
+        <span class="day-label">Thursday</span>
+        <span class="day-special">Ham &amp; Cheese</span>
+      </div>
+      <div class="day-row">
+        <span class="day-label">Friday & Saturday</span>
+        <span class="day-special">Turkey &amp; Cheese</span>
+      </div>
+    </div>
+
+  </div><!-- /menu-body (specials) -->
 
   <div class="section-divider"></div>
 
@@ -912,16 +1114,18 @@
       <div class="tray-item">
         <div>
           <div class="tray-item-name">Small Tray</div>
-          <div class="tray-item-desc">Serves approx. 10–15 guests · 2 full subs cut to order</div>
+          <!-- TODO: Serves approx. 25-30 guests · -->
+          <div class="tray-item-desc">6 7" subs cut to order</div>
         </div>
-        <div><span class="price-val single">$39.99</span></div>
+        <div><span class="price-val single">$49.99</span></div>
       </div>
       <div class="tray-item">
         <div>
           <div class="tray-item-name">Large Tray</div>
-          <div class="tray-item-desc">Serves approx. 25–30 guests · 4 full subs cut to order</div>
+          <!-- TODO: Serves approx. 25-30 guests · -->
+          <div class="tray-item-desc">10 7" subs cut to order</div>
         </div>
-        <div><span class="price-val single">$74.99</span></div>
+        <div><span class="price-val single">$79.99</span></div>
       </div>
     </div>
 
@@ -942,9 +1146,9 @@
   <!-- ── FOOTER ──────────────────────────────────────────────── -->
   <footer class="footer">
     <div class="footer-links">
-      <a href="#top-nav">Home</a>
+      <a href="#info">Info</a>
       <a href="#menu">Menu</a>
-      <a href="#trays">Catering</a>
+      <a href="#trays">Trays</a>
     </div>
     <div class="footer-copy">© 2026 Gulf State Sub. All rights reserved.</div>
   </footer>

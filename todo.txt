@@ -1,8 +1,0 @@
-* information on how many subs for how many ppl on sandwich trays
-* combo, chip, drink information
-* update items and prices
-* redo logo and place in proper spot
-* update top and bottom nav for INFO section
-* update available salad dressings
-* new and improved photos
-* premium toppings and prices
