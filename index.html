@@ -94,21 +94,23 @@
       width: 100%;
       overflow: hidden;
       background: #FFFFFF;
+      /* portrait 3:4 ratio — height grows with width to show full image */
+      aspect-ratio: 3 / 4;
     }
     .slider-track {
       display: flex;
+      height: 100%;
       transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
       will-change: transform;
-      align-items: center;
     }
     .slide {
       flex: 0 0 100%;
       min-width: 100%;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
       display: block;
-      object-fit: contain;
-      background: #FFFFFF;
     }
     /* Prev/next arrows */
     .slider-btn {
@@ -640,6 +642,7 @@
     @media (min-width: 600px) {
       .page-shell { border-radius: 12px; margin: 24px auto; min-height: unset; }
       body { background: #cdd2e0; }
+      .slider { aspect-ratio: unset; height: 500px; }
     }
   </style>
 </head>
@@ -1214,25 +1217,12 @@
 <script>
   /* ── PHOTO SLIDER ─────────────────────────────────────────── */
   (function() {
-    const slider = document.getElementById('slider');
     const track  = document.getElementById('slider-track');
     const dots   = document.querySelectorAll('.slider-dot');
     const slides = document.querySelectorAll('.slide');
     const total  = slides.length;
     let current  = 0;
     let timer;
-
-    function lockHeight() {
-      let max = 0;
-      slides.forEach(s => { if (s.offsetHeight > max) max = s.offsetHeight; });
-      if (max > 0) {
-        track.style.height  = max + 'px';
-        slider.style.height = max + 'px';
-      } else {
-        // Images not decoded yet — retry
-        setTimeout(lockHeight, 100);
-      }
-    }
 
     function goTo(n) {
       current = (n + total) % total;
@@ -1247,10 +1237,6 @@
       clearInterval(timer);
       timer = setInterval(next, 4000);
     }
-
-    // Lock to tallest image once everything has loaded
-    window.addEventListener('load', lockHeight);
-    setTimeout(lockHeight, 500);
 
     document.getElementById('slider-next').addEventListener('click', () => { next(); startAuto(); });
     document.getElementById('slider-prev').addEventListener('click', () => { prev(); startAuto(); });
